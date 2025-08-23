@@ -1235,18 +1235,36 @@ form .button-area {
 }
 /* scroll top ends */
 
+/* Company icons - responsive sizing */
 .company-icon {
-  width: 75px;  /* Adjust size as needed */
-  height: 75px;
+  width: 4.5rem;  /* Use rem units for better responsiveness */
+  height: 4.5rem;
+  max-width: 100%;
   object-fit: contain;  /* Maintains aspect ratio */
   vertical-align: middle;
-  margin-right: 10px;
-  border-radius: 50%;  /* Optional: makes icons circular */
+  margin-right: 0.625rem;
+  border-radius: 50%;  /* Makes icons circular */
+  transition: transform 0.3s ease;
 }
 
-/* Optional: Add hover effect */
 .company-icon:hover {
-  transform: scale(1.2);
-  transition: transform 0.3s ease;
+  transform: scale(1.1);
+}
+
+/* Mobile responsiveness for company icons */
+@media (max-width: 768px) {
+  .company-icon {
+    width: 3.5rem;
+    height: 3.5rem;
+    margin-right: 0.5rem;
+  }
+}
+
+@media (max-width: 450px) {
+  .company-icon {
+    width: 3rem;
+    height: 3rem;
+    margin-right: 0.375rem;
+  }
 }
 /* scroll top ends */

@@ -1,35 +1,88 @@
 document.addEventListener('DOMContentLoaded', function() {
+    // Load header with error handling
     fetch('/partials/header.html')
-        .then(res => res.text())
-        .then(html => document.getElementById('header-placeholder').innerHTML = html);
+        .then(res => {
+            if (!res.ok) throw new Error('Failed to load header');
+            return res.text();
+        })
+        .then(html => {
+            const placeholder = document.getElementById('header-placeholder');
+            if (placeholder) placeholder.innerHTML = html;
+        })
+        .catch(err => console.error('Header load error:', err));
+    
+    // Load footer with error handling
     fetch('/partials/footer.html')
-        .then(res => res.text())
-        .then(html => document.getElementById('footer-placeholder').innerHTML = html);
+        .then(res => {
+            if (!res.ok) throw new Error('Failed to load footer');
+            return res.text();
+        })
+        .then(html => {
+            const placeholder = document.getElementById('footer-placeholder');
+            if (placeholder) placeholder.innerHTML = html;
+        })
+        .catch(err => console.error('Footer load error:', err));
 
-    // Dynamic experience timeline
+    // Dynamic experience timeline with XSS protection
     fetch('/assets/data/experience.json')
-        .then(res => res.json())
+        .then(res => {
+            if (!res.ok) throw new Error('Failed to load experience data');
+            return res.json();
+        })
         .then(data => {
             const container = document.getElementById('experience-timeline');
-            let html = '';
+            if (!container) return;
+            
+            container.innerHTML = ''; // Clear existing content
+            
             data.forEach(item => {
-                html += `
-                <div class="container ${item.side}">
-                  <div class="content">
-                    <div class="tag">
-                      <h2>
-                        <img src="${item.companyIcon}" alt="${item.alt}" class="company-icon">
-                        ${item.company}
-                      </h2>
-                    </div>
-                    <div class="desc">
-                      <h3>${item.title}</h3>
-                      <p>${item.period}</p>
-                    </div>
-                  </div>
-                </div>`;
+                const containerDiv = document.createElement('div');
+                containerDiv.className = `container ${escapeHtml(item.side || 'left')}`;
+                
+                const contentDiv = document.createElement('div');
+                contentDiv.className = 'content';
+                
+                const tagDiv = document.createElement('div');
+                tagDiv.className = 'tag';
+                
+                const h2 = document.createElement('h2');
+                
+                if (item.companyIcon) {
+                    const img = document.createElement('img');
+                    img.src = escapeHtml(item.companyIcon);
+                    img.alt = escapeHtml(item.alt || item.company || 'Company logo');
+                    img.className = 'company-icon';
+                    img.onerror = function() { this.style.display = 'none'; };
+                    h2.appendChild(img);
+                }
+                
+                const companyText = document.createTextNode(' ' + (item.company || ''));
+                h2.appendChild(companyText);
+                tagDiv.appendChild(h2);
+                
+                const descDiv = document.createElement('div');
+                descDiv.className = 'desc';
+                
+                const h3 = document.createElement('h3');
+                h3.textContent = item.title || '';
+                
+                const p = document.createElement('p');
+                p.textContent = item.period || '';
+                
+                descDiv.appendChild(h3);
+                descDiv.appendChild(p);
+                contentDiv.appendChild(tagDiv);
+                contentDiv.appendChild(descDiv);
+                containerDiv.appendChild(contentDiv);
+                container.appendChild(containerDiv);
             });
-            container.innerHTML = html;
+        })
+        .catch(err => {
+            console.error('Experience timeline load error:', err);
+            const container = document.getElementById('experience-timeline');
+            if (container) {
+                container.innerHTML = '<p>Unable to load experience data.</p>';
+            }
         });
 
     // Initialize VanillaTilt for static elements
@@ -75,20 +128,77 @@ $(document).ready(function () {
         }, 500, 'linear')
     });
 
-    // <!-- emailjs to mail contact form data -->
+    // EmailJS configuration - More secure approach
+    // Note: For production, use environment variables or server-side processing
+    const EMAILJS_CONFIG = {
+        publicKey: 'user_TTDmetQLYgWCLzHTDgqxm', // Consider moving to environment variable
+        serviceId: 'contact_service',
+        templateId: 'template_contact'
+    };
+    
+    // Initialize EmailJS once on page load
+    if (typeof emailjs !== 'undefined') {
+        emailjs.init(EMAILJS_CONFIG.publicKey);
+    }
+    
+    // Contact form submission with improved security and UX
     $("#contact-form").submit(function (event) {
-        emailjs.init("user_TTDmetQLYgWCLzHTDgqxm");
-
-        emailjs.sendForm('contact_service', 'template_contact', '#contact-form')
-            .then(function (response) {
-                console.log('SUCCESS!', response.status, response.text);
-                document.getElementById("contact-form").reset();
-                alert("Form Submitted Successfully");
-            }, function (error) {
-                console.log('FAILED...', error);
-                alert("Form Submission Failed! Try Again");
-            });
         event.preventDefault();
+        
+        // Basic client-side validation
+        const form = this;
+        const formData = new FormData(form);
+        
+        // Validate required fields
+        const name = formData.get('name');
+        const email = formData.get('email');
+        const message = formData.get('message');
+        
+        if (!name || !email || !message) {
+            alert('Please fill in all required fields.');
+            return;
+        }
+        
+        // Basic email validation
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(email)) {
+            alert('Please enter a valid email address.');
+            return;
+        }
+        
+        // Disable submit button to prevent duplicate submissions
+        const submitBtn = form.querySelector('button[type="submit"]');
+        if (submitBtn) {
+            submitBtn.disabled = true;
+            submitBtn.textContent = 'Sending...';
+        }
+        
+        // Send form
+        if (typeof emailjs !== 'undefined') {
+            emailjs.sendForm(EMAILJS_CONFIG.serviceId, EMAILJS_CONFIG.templateId, form)
+                .then(function (response) {
+                    console.log('Form submitted successfully');
+                    form.reset();
+                    alert('Thank you for your message! I will get back to you soon.');
+                }, function (error) {
+                    console.error('Form submission error:', error);
+                    alert('Sorry, there was an error sending your message. Please try again later or contact me directly via email.');
+                })
+                .finally(function() {
+                    // Re-enable submit button
+                    if (submitBtn) {
+                        submitBtn.disabled = false;
+                        submitBtn.textContent = 'Submit';
+                    }
+                });
+        } else {
+            console.error('EmailJS not loaded');
+            alert('Contact form is currently unavailable. Please try again later.');
+            if (submitBtn) {
+                submitBtn.disabled = false;
+                submitBtn.textContent = 'Submit';
+            }
+        }
     });
     // <!-- emailjs to mail contact form data -->
 
@@ -118,52 +228,122 @@ var typed = new Typed(".typing-text", {
 // <!-- typed js effect ends -->
 
 async function fetchData(type = "skills") {
-    let response
-    type === "skills" ?
-        response = await fetch("skills.json")
-        :
-        response = await fetch("./projects/projects.json")
-    const data = await response.json();
-    return data;
+    try {
+        let response
+        type === "skills" ?
+            response = await fetch("skills.json")
+            :
+            response = await fetch("./projects/projects.json")
+        
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        
+        const data = await response.json();
+        return data;
+    } catch (error) {
+        console.error('Error fetching data:', error);
+        return [];
+    }
+}
+
+// Utility function to escape HTML to prevent XSS
+function escapeHtml(text) {
+    const map = {
+        '&': '&amp;',
+        '<': '&lt;',
+        '>': '&gt;',
+        '"': '&quot;',
+        "'": '&#039;'
+    };
+    return text.toString().replace(/[&<>"']/g, m => map[m]);
 }
 
 function showSkills(skills) {
     let skillsContainer = document.getElementById("skillsContainer");
-    let skillHTML = "";
+    skillsContainer.innerHTML = ''; // Clear existing content
+    
     skills.forEach(skill => {
-        skillHTML += `
-        <div class="bar">
-              <div class="info">
-                <img src=${skill.icon} alt="skill" />
-                <span>${skill.name}</span>
-              </div>
-            </div>`
+        const skillDiv = document.createElement('div');
+        skillDiv.className = 'bar';
+        
+        const infoDiv = document.createElement('div');
+        infoDiv.className = 'info';
+        
+        const img = document.createElement('img');
+        img.src = escapeHtml(skill.icon);
+        img.alt = 'skill';
+        img.onerror = function() { this.src = '/assets/images/default-skill.png'; };
+        
+        const span = document.createElement('span');
+        span.textContent = skill.name; // Using textContent prevents XSS
+        
+        infoDiv.appendChild(img);
+        infoDiv.appendChild(span);
+        skillDiv.appendChild(infoDiv);
+        skillsContainer.appendChild(skillDiv);
     });
-    skillsContainer.innerHTML = skillHTML;
 }
 
 function showProjects(projects) {
     let projectsContainer = document.querySelector("#work .box-container");
-    let projectHTML = "";
+    projectsContainer.innerHTML = ''; // Clear existing content
+    
     projects.slice(0, 10).filter(project => project.category != "android").forEach(project => {
-        projectHTML += `
-        <div class="box tilt">
-      <img draggable="false" src="/assets/images/projects/${project.image}.png" alt="project" />
-      <div class="content">
-        <div class="tag">
-        <h3>${project.name}</h3>
-        </div>
-        <div class="desc">
-          <p>${project.desc}</p>
-          <div class="btns">
-            <a href="${project.links.view}" class="btn" target="_blank"><i class="fas fa-eye"></i> View</a>
-            <a href="${project.links.code}" class="btn" target="_blank">Code <i class="fas fa-code"></i></a>
-          </div>
-        </div>
-      </div>
-    </div>`
+        const boxDiv = document.createElement('div');
+        boxDiv.className = 'box tilt';
+        
+        const img = document.createElement('img');
+        img.draggable = false;
+        img.src = `/assets/images/projects/${escapeHtml(project.image)}.png`;
+        img.alt = 'project';
+        img.onerror = function() { this.src = '/assets/images/default-project.png'; };
+        
+        const contentDiv = document.createElement('div');
+        contentDiv.className = 'content';
+        
+        const tagDiv = document.createElement('div');
+        tagDiv.className = 'tag';
+        const h3 = document.createElement('h3');
+        h3.textContent = project.name;
+        tagDiv.appendChild(h3);
+        
+        const descDiv = document.createElement('div');
+        descDiv.className = 'desc';
+        const p = document.createElement('p');
+        p.textContent = project.desc;
+        
+        const btnsDiv = document.createElement('div');
+        btnsDiv.className = 'btns';
+        
+        if (project.links && project.links.view) {
+            const viewLink = document.createElement('a');
+            viewLink.href = escapeHtml(project.links.view);
+            viewLink.className = 'btn';
+            viewLink.target = '_blank';
+            viewLink.rel = 'noopener noreferrer';
+            viewLink.innerHTML = '<i class="fas fa-eye"></i> View';
+            btnsDiv.appendChild(viewLink);
+        }
+        
+        if (project.links && project.links.code) {
+            const codeLink = document.createElement('a');
+            codeLink.href = escapeHtml(project.links.code);
+            codeLink.className = 'btn';
+            codeLink.target = '_blank';
+            codeLink.rel = 'noopener noreferrer';
+            codeLink.innerHTML = 'Code <i class="fas fa-code"></i>';
+            btnsDiv.appendChild(codeLink);
+        }
+        
+        descDiv.appendChild(p);
+        descDiv.appendChild(btnsDiv);
+        contentDiv.appendChild(tagDiv);
+        contentDiv.appendChild(descDiv);
+        boxDiv.appendChild(img);
+        boxDiv.appendChild(contentDiv);
+        projectsContainer.appendChild(boxDiv);
     });
-    projectsContainer.innerHTML = projectHTML;
 
     // Initialize VanillaTilt for dynamic projects
     VanillaTilt.init(document.querySelectorAll(".tilt"), { max: 15 });

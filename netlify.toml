@@ -1,0 +1,71 @@
+# Netlify Configuration File
+
+# Build settings
+[build]
+  publish = "."
+
+# Headers for security and performance
+[[headers]]
+  for = "/*"
+  [headers.values]
+    # Security Headers
+    X-Frame-Options = "DENY"
+    X-Content-Type-Options = "nosniff"
+    X-XSS-Protection = "1; mode=block"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+    Permissions-Policy = "accelerometer=(), camera=(), geolocation=(), gyroscope=(), magnetometer=(), microphone=(), payment=(), usb=()"
+    
+    # Content Security Policy - Adjust based on your needs
+    Content-Security-Policy = '''
+      default-src 'self';
+      script-src 'self' 'unsafe-inline' 'unsafe-eval' 
+        https://cdnjs.cloudflare.com 
+        https://cdn.jsdelivr.net 
+        https://embed.tawk.to 
+        https://cdn.emailjs.com
+        https://assets.calendly.com;
+      style-src 'self' 'unsafe-inline' 
+        https://cdnjs.cloudflare.com 
+        https://fonts.googleapis.com;
+      font-src 'self' 
+        https://cdnjs.cloudflare.com 
+        https://fonts.gstatic.com;
+      img-src 'self' data: https: blob:;
+      connect-src 'self' 
+        https://api.emailjs.com 
+        wss://embed.tawk.to;
+      frame-src 'self' 
+        https://calendly.com;
+      object-src 'none';
+      base-uri 'self';
+      form-action 'self';
+      upgrade-insecure-requests;
+    '''
+
+# Caching headers for static assets
+[[headers]]
+  for = "/assets/images/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+[[headers]]
+  for = "/assets/css/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+[[headers]]
+  for = "/assets/js/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+# Redirects (if needed)
+# [[redirects]]
+#   from = "/old-path"
+#   to = "/new-path"
+#   status = 301
+
+# 404 page
+[[redirects]]
+  from = "/*"
+  to = "/404.html"
+  status = 404
