@@ -1,0 +1,513 @@
+/* 
+ * Color Contrast Improvements for Portfolio Website
+ * Purpose: Fix readability issues with dark text on dark backgrounds
+ * WCAG AA Compliance: 4.5:1 for normal text, 3:1 for large text
+ * Created: 2025
+ */
+
+/* ========================================
+   CSS Custom Properties - Color System
+   ======================================== */
+
+:root {
+  /* Primary Brand Colors */
+  --primary-purple: #7c3aed;        /* Main purple - accessible */
+  --primary-purple-dark: #6d28d9;   /* Darker purple for hover states */
+  --primary-purple-light: #a78bfa;  /* Light purple for accents */
+  
+  /* Accent Colors */
+  --accent-orange: #fb923c;         /* Orange accent - higher contrast */
+  --accent-yellow: #fbbf24;         /* Yellow - more vibrant */
+  --accent-blue: #3b82f6;           /* Blue - accessible shade */
+  
+  /* Background Colors - Light Mode */
+  --bg-primary: #ffffff;            /* Main background */
+  --bg-secondary: #f8fafc;          /* Secondary background */
+  --bg-tertiary: #f1f5f9;           /* Tertiary background */
+  --bg-card: #ffffff;               /* Card backgrounds */
+  --bg-hover: #f8fafc;              /* Hover states */
+  
+  /* Background Colors - Dark Sections */
+  --bg-dark: #1e293b;               /* Dark sections - lighter than pure black */
+  --bg-dark-secondary: #334155;     /* Secondary dark */
+  --bg-dark-tertiary: #475569;      /* Tertiary dark */
+  
+  /* Text Colors - Light Backgrounds */
+  --text-primary: #0f172a;          /* Main text - high contrast */
+  --text-secondary: #475569;        /* Secondary text - good contrast */
+  --text-tertiary: #64748b;         /* Tertiary text - still readable */
+  --text-muted: #94a3b8;            /* Muted text */
+  
+  /* Text Colors - Dark Backgrounds */
+  --text-on-dark: #f8fafc;          /* Primary text on dark */
+  --text-on-dark-secondary: #e2e8f0; /* Secondary text on dark */
+  --text-on-dark-muted: #cbd5e1;    /* Muted text on dark */
+  
+  /* Interactive Elements */
+  --link-color: #3b82f6;            /* Link color */
+  --link-hover: #2563eb;            /* Link hover */
+  --link-on-dark: #60a5fa;          /* Links on dark backgrounds */
+  
+  /* Status Colors */
+  --success: #10b981;               /* Success green */
+  --warning: #f59e0b;               /* Warning amber */
+  --error: #ef4444;                 /* Error red */
+  --info: #3b82f6;                  /* Info blue */
+  
+  /* Borders and Shadows */
+  --border-light: #e2e8f0;          /* Light border */
+  --border-dark: #475569;           /* Dark border */
+  --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+  --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+  --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1);
+}
+
+/* ========================================
+   Global Color Fixes
+   ======================================== */
+
+/* Fix body text contrast */
+body {
+  color: var(--text-primary) !important;
+  background: var(--bg-secondary) !important;
+}
+
+/* Fix heading colors */
+h1, h2, h3, h4, h5, h6,
+.heading {
+  color: var(--text-primary) !important;
+}
+
+.heading span {
+  color: var(--primary-purple) !important;
+}
+
+/* ========================================
+   Navigation Bar Fixes
+   ======================================== */
+
+header {
+  background-color: var(--bg-primary) !important;
+  box-shadow: var(--shadow-md) !important;
+}
+
+header .logo {
+  color: var(--text-primary) !important;
+}
+
+header .logo i {
+  color: var(--primary-purple) !important;
+}
+
+header .navbar a {
+  color: var(--text-secondary) !important;
+}
+
+header .navbar a:hover,
+header .navbar a.active {
+  color: var(--primary-purple) !important;
+}
+
+/* Mobile menu dark background fix */
+header .navbar {
+  background-color: var(--bg-dark) !important;
+}
+
+header .navbar.active a {
+  color: var(--text-on-dark) !important;
+}
+
+header .navbar.active a:hover {
+  color: var(--primary-purple-light) !important;
+}
+
+/* ========================================
+   Hero Section Fixes
+   ======================================== */
+
+.home {
+  background: linear-gradient(135deg, var(--bg-dark) 0%, #0f172a 100%) !important;
+}
+
+.home .content h2 {
+  color: var(--text-on-dark) !important;
+}
+
+.home .content h3 {
+  color: var(--accent-yellow) !important;
+}
+
+.home .content p {
+  color: var(--text-on-dark-secondary) !important;
+}
+
+.home .btn {
+  background: var(--primary-purple) !important;
+  color: var(--text-on-dark) !important;
+}
+
+.home .btn:hover {
+  background: var(--primary-purple-dark) !important;
+}
+
+/* Social icons contrast fix */
+.socials li a {
+  background-color: var(--bg-dark-secondary) !important;
+  color: var(--text-on-dark) !important;
+  border: 2px solid var(--border-dark) !important;
+}
+
+.socials li a:hover {
+  background-color: var(--primary-purple) !important;
+  border-color: var(--primary-purple) !important;
+}
+
+/* ========================================
+   About Section Fixes
+   ======================================== */
+
+.about {
+  background: var(--bg-primary) !important;
+}
+
+.about .row .content h3 {
+  color: var(--text-primary) !important;
+}
+
+.about .row .content p {
+  color: var(--text-secondary) !important;
+}
+
+.about .resumebtn .btn {
+  background: var(--primary-purple) !important;
+  color: white !important;
+}
+
+.about .resumebtn .btn:hover {
+  background: var(--primary-purple-dark) !important;
+}
+
+/* ========================================
+   Skills Section Fixes
+   ======================================== */
+
+.skills {
+  background: var(--bg-secondary) !important;
+}
+
+.skills .container .bar {
+  background: var(--bg-primary) !important;
+  box-shadow: var(--shadow-md) !important;
+}
+
+.skills h3 {
+  color: var(--text-primary) !important;
+}
+
+/* ========================================
+   Education Section Fixes
+   ======================================== */
+
+.education {
+  background: linear-gradient(to bottom, var(--bg-dark), #1e293b) !important;
+}
+
+.education h2,
+.education h2 span {
+  color: var(--text-on-dark) !important;
+}
+
+.education h2 span {
+  color: var(--accent-yellow) !important;
+}
+
+.education .box-container .box {
+  background: rgba(255, 255, 255, 0.05) !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+}
+
+.education .box-container .box h3 {
+  color: var(--text-on-dark) !important;
+}
+
+.education .box-container .box p {
+  color: var(--text-on-dark-secondary) !important;
+}
+
+.education .box-container .box h4 {
+  color: var(--accent-yellow) !important;
+}
+
+/* ========================================
+   Experience Section Fixes
+   ======================================== */
+
+.experience {
+  background: var(--bg-primary) !important;
+}
+
+.experience .timeline .container {
+  background: var(--bg-primary) !important;
+  color: var(--text-primary) !important;
+  box-shadow: var(--shadow-lg) !important;
+}
+
+.experience .timeline .container h3 {
+  color: var(--text-primary) !important;
+}
+
+.experience .timeline .container h4 {
+  color: var(--primary-purple) !important;
+}
+
+.experience .timeline .container p {
+  color: var(--text-secondary) !important;
+}
+
+/* ========================================
+   Contact Section Fixes
+   ======================================== */
+
+.contact {
+  background: var(--bg-secondary) !important;
+}
+
+.contact .container .content .info-box {
+  background: var(--bg-primary) !important;
+  box-shadow: var(--shadow-md) !important;
+}
+
+.contact .container .content .info-box h4 {
+  color: var(--text-primary) !important;
+}
+
+.contact .container .content .info-box p {
+  color: var(--text-secondary) !important;
+}
+
+.contact .container form input,
+.contact .container form textarea {
+  background: var(--bg-primary) !important;
+  color: var(--text-primary) !important;
+  border: 1px solid var(--border-light) !important;
+}
+
+.contact .container form input::placeholder,
+.contact .container form textarea::placeholder {
+  color: var(--text-tertiary) !important;
+}
+
+.contact .container form .btn {
+  background: var(--primary-purple) !important;
+  color: white !important;
+}
+
+/* ========================================
+   Footer Fixes
+   ======================================== */
+
+.footer {
+  background: var(--bg-dark) !important;
+}
+
+.footer h1,
+.footer h2,
+.footer p {
+  color: var(--text-on-dark) !important;
+}
+
+.footer a {
+  color: var(--link-on-dark) !important;
+}
+
+.footer a:hover {
+  color: var(--primary-purple-light) !important;
+}
+
+.footer .box p,
+.footer .box a {
+  color: var(--text-on-dark-secondary) !important;
+}
+
+.footer .box h2 {
+  color: var(--accent-yellow) !important;
+}
+
+/* ========================================
+   Button and Link Contrast Fixes
+   ======================================== */
+
+/* General button improvements */
+.btn,
+button {
+  background: var(--primary-purple) !important;
+  color: white !important;
+  border: none !important;
+  font-weight: 500 !important;
+}
+
+.btn:hover,
+button:hover {
+  background: var(--primary-purple-dark) !important;
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-lg) !important;
+}
+
+/* Link improvements */
+a {
+  color: var(--link-color) !important;
+}
+
+a:hover {
+  color: var(--link-hover) !important;
+}
+
+/* Links on dark backgrounds */
+.home a,
+.education a,
+.footer a {
+  color: var(--link-on-dark) !important;
+}
+
+/* ========================================
+   Card and Container Fixes
+   ======================================== */
+
+.card,
+.box,
+.container {
+  background: var(--bg-primary) !important;
+  box-shadow: var(--shadow-md) !important;
+}
+
+/* Dark theme cards */
+.education .box,
+.home .box {
+  background: rgba(255, 255, 255, 0.08) !important;
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+}
+
+/* ========================================
+   Accessibility Improvements
+   ======================================== */
+
+/* Focus states for keyboard navigation */
+a:focus,
+button:focus,
+input:focus,
+textarea:focus,
+select:focus {
+  outline: 3px solid var(--primary-purple) !important;
+  outline-offset: 2px !important;
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  :root {
+    --text-primary: #000000;
+    --text-secondary: #1a1a1a;
+    --text-on-dark: #ffffff;
+    --bg-dark: #0f172a;
+    --primary-purple: #9333ea;
+  }
+}
+
+/* ========================================
+   Dark Mode Support (Optional)
+   ======================================== */
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg-primary: #1e293b;
+    --bg-secondary: #0f172a;
+    --bg-tertiary: #334155;
+    --text-primary: #f8fafc;
+    --text-secondary: #cbd5e1;
+    --text-tertiary: #94a3b8;
+    --border-light: #475569;
+  }
+  
+  body {
+    background: var(--bg-secondary) !important;
+  }
+}
+
+/* ========================================
+   Specific Problem Area Fixes
+   ======================================== */
+
+/* Fix the problematic dark blue on black combinations */
+.education {
+  background: var(--bg-dark) !important;
+}
+
+/* Fix timeline contrast issues */
+.experience .timeline .container::before {
+  border-color: var(--primary-purple) !important;
+}
+
+/* Fix project cards */
+.work .box {
+  background: var(--bg-primary) !important;
+}
+
+.work .box .text h3 {
+  color: var(--text-primary) !important;
+}
+
+.work .box .text p {
+  color: var(--text-secondary) !important;
+}
+
+/* Fix form validation messages */
+.error-msg {
+  color: var(--error) !important;
+  background: rgba(239, 68, 68, 0.1) !important;
+  padding: 0.5rem !important;
+  border-radius: 4px !important;
+}
+
+.success-msg {
+  color: var(--success) !important;
+  background: rgba(16, 185, 129, 0.1) !important;
+  padding: 0.5rem !important;
+  border-radius: 4px !important;
+}
+
+/* ========================================
+   Utility Classes for Quick Fixes
+   ======================================== */
+
+.text-high-contrast {
+  color: var(--text-primary) !important;
+}
+
+.text-on-dark-high-contrast {
+  color: var(--text-on-dark) !important;
+}
+
+.bg-accessible-dark {
+  background: var(--bg-dark) !important;
+}
+
+.bg-accessible-light {
+  background: var(--bg-primary) !important;
+}
+
+/* ========================================
+   Animation and Transition Improvements
+   ======================================== */
+
+/* Smooth color transitions */
+* {
+  transition: color 0.3s ease, background-color 0.3s ease, border-color 0.3s ease !important;
+}
+
+/* Disable transitions for users who prefer reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    transition: none !important;
+    animation: none !important;
+  }
+}

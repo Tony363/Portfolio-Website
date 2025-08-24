@@ -263,7 +263,7 @@ function showSkills(skills) {
     let skillsContainer = document.getElementById("skillsContainer");
     skillsContainer.innerHTML = ''; // Clear existing content
     
-    skills.forEach(skill => {
+    skills.forEach((skill, index) => {
         const skillDiv = document.createElement('div');
         skillDiv.className = 'bar';
         
@@ -271,9 +271,35 @@ function showSkills(skills) {
         infoDiv.className = 'info';
         
         const img = document.createElement('img');
-        img.src = escapeHtml(skill.icon);
-        img.alt = 'skill';
-        img.onerror = function() { this.src = '/assets/images/default-skill.png'; };
+        
+        // Add lazy loading for images not in viewport initially
+        if (index < 12) {
+            // Load first 12 images immediately (typically visible)
+            img.src = escapeHtml(skill.icon);
+        } else {
+            // Lazy load the rest
+            img.dataset.src = escapeHtml(skill.icon);
+            img.classList.add('lazy-load');
+            img.src = '/assets/images/default-skill.png'; // Show placeholder initially
+        }
+        
+        img.alt = `${skill.name} icon`;
+        img.loading = 'lazy'; // Native lazy loading
+        img.width = 48;
+        img.height = 48;
+        
+        // Improved error handling with retry logic
+        img.onerror = function() {
+            if (!this.dataset.retried) {
+                this.dataset.retried = 'true';
+                // Try original URL once more after a delay
+                setTimeout(() => {
+                    this.src = this.dataset.src || '/assets/images/default-skill.png';
+                }, 1000);
+            } else {
+                this.src = '/assets/images/default-skill.png';
+            }
+        };
         
         const span = document.createElement('span');
         span.textContent = skill.name; // Using textContent prevents XSS
@@ -283,6 +309,40 @@ function showSkills(skills) {
         skillDiv.appendChild(infoDiv);
         skillsContainer.appendChild(skillDiv);
     });
+    
+    // Initialize lazy loading observer
+    initLazyLoading();
+}
+
+// Lazy loading implementation with Intersection Observer
+function initLazyLoading() {
+    const lazyImages = document.querySelectorAll('img.lazy-load');
+    
+    if ('IntersectionObserver' in window) {
+        const imageObserver = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const img = entry.target;
+                    img.src = img.dataset.src;
+                    img.classList.remove('lazy-load');
+                    img.classList.add('lazy-loaded');
+                    observer.unobserve(img);
+                }
+            });
+        }, {
+            rootMargin: '50px 0px', // Start loading 50px before entering viewport
+            threshold: 0.01
+        });
+        
+        lazyImages.forEach(img => imageObserver.observe(img));
+    } else {
+        // Fallback for browsers without Intersection Observer
+        lazyImages.forEach(img => {
+            img.src = img.dataset.src;
+            img.classList.remove('lazy-load');
+            img.classList.add('lazy-loaded');
+        });
+    }
 }
 
 function showProjects(projects) {

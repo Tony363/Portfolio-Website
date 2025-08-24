@@ -1,0 +1,185 @@
+[
+  {
+    "name": "C",
+    "icon": "/assets/images/skills/c.png",
+    "originalUrl": "https://img.icons8.com/?size=100&id=shQTXiDQiQVR&format=png&color=000000"
+  },
+  {
+    "name": "C++",
+    "icon": "/assets/images/skills/c.png",
+    "originalUrl": "https://img.icons8.com/color/48/000000/c-plus-plus-logo.png"
+  },
+  {
+    "name": "Python",
+    "icon": "/assets/images/skills/python.png",
+    "originalUrl": "https://img.icons8.com/color/48/000000/python--v1.png"
+  },
+  {
+    "name": "Java",
+    "icon": "/assets/images/skills/java.png",
+    "originalUrl": "https://img.icons8.com/color/48/000000/java-coffee-cup-logo--v1.png"
+  },
+  {
+    "name": "PHP",
+    "icon": "/assets/images/skills/php.png",
+    "originalUrl": "https://img.icons8.com/offices/48/000000/php-logo.png"
+  },
+  {
+    "name": "JavaScript",
+    "icon": "/assets/images/skills/javascript.png",
+    "originalUrl": "https://img.icons8.com/color/48/000000/javascript--v1.png"
+  },
+  {
+    "name": "ExpressJS",
+    "icon": "/assets/images/skills/expressjs.png",
+    "originalUrl": "https://img.icons8.com/fluency/48/000000/node-js.png"
+  },
+  {
+    "name": "NodeJS",
+    "icon": "/assets/images/skills/nodejs.png",
+    "originalUrl": "https://img.icons8.com/color/48/000000/nodejs.png"
+  },
+  {
+    "name": "Typescript",
+    "icon": "/assets/images/skills/typescript.png",
+    "originalUrl": "https://img.icons8.com/?size=100&id=wpZmKzk11AzJ&format=png&color=000000"
+  },
+  {
+    "name": "D3 JS",
+    "icon": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/15/Logo_D3.svg/800px-Logo_D3.svg.png"
+  },
+  {
+    "name": "Bootstrap",
+    "icon": "/assets/images/skills/bootstrap.png",
+    "originalUrl": "https://img.icons8.com/color/48/000000/bootstrap.png"
+  },
+  {
+    "name": "CSS",
+    "icon": "/assets/images/skills/css.png",
+    "originalUrl": "https://img.icons8.com/?size=100&id=11935&format=png&color=000000"
+  },
+  {
+    "name": "HTML5",
+    "icon": "/assets/images/skills/html5.png",
+    "originalUrl": "https://img.icons8.com/color/48/000000/html-5--v1.png"
+  },
+  {
+    "name": "MongoDB",
+    "icon": "/assets/images/skills/mongodb.png",
+    "originalUrl": "https://img.icons8.com/color/48/000000/mongodb.png"
+  },
+  {
+    "name": "MySQL",
+    "icon": "/assets/images/skills/mysql.png",
+    "originalUrl": "https://img.icons8.com/color/48/000000/mysql-logo.png"
+  },
+  {
+    "name": "PostgreSQL",
+    "icon": "/assets/images/skills/postgresql.png",
+    "originalUrl": "https://img.icons8.com/color/48/000000/postgreesql.png"
+  },
+  {
+    "name": "AWS",
+    "icon": "/assets/images/skills/aws.png",
+    "originalUrl": "https://img.icons8.com/color/48/000000/amazon-web-services.png"
+  },
+  {
+    "name": "GCP",
+    "icon": "/assets/images/skills/gcp.png",
+    "originalUrl": "https://img.icons8.com/?size=100&id=fpGM2cINbbu4&format=png&color=000000"
+  },
+  {
+    "name": "Docker",
+    "icon": "/assets/images/skills/docker.png",
+    "originalUrl": "https://img.icons8.com/?size=100&id=qGZRK3KTK57F&format=png&color=000000"
+  },
+  {
+    "name": "Django",
+    "icon": "/assets/images/skills/django.png",
+    "originalUrl": "https://img.icons8.com/?size=100&id=qc3TyHJPxEoH&format=png&color=000000"
+  },
+  {
+    "name": "Flask",
+    "icon": "/assets/images/skills/flask.jpg",
+    "originalUrl": "https://ih1.redbubble.net/image.2488655049.9084/st,small,507x507-pad,600x600,f8f8f8.jpg"
+  },
+  {
+    "name": "FastAPI",
+    "icon": "/assets/images/skills/fastapi.jpg",
+    "originalUrl": "https://ih1.redbubble.net/image.5432135973.6302/st,small,507x507-pad,600x600,f8f8f8.jpg"
+  },
+  {
+    "name": "Heroku",
+    "icon": "/assets/images/skills/heroku.png",
+    "originalUrl": "https://img.icons8.com/?size=100&id=31085&format=png&color=000000"
+  },
+  {
+    "name": "Vercel",
+    "icon": "/assets/images/skills/vercel.webp",
+    "originalUrl": "https://images.ctfassets.net/crb83veve8xb/2VaNf5PhpBlvKAUKYfmefe/5fdaf99f05704485b02e14e8d4addefb/vercel.webp"
+  },
+  {
+    "name": "Postman",
+    "icon": "/assets/images/skills/postman.png",
+    "originalUrl": "https://cdn.icon-icons.com/icons2/3053/PNG/512/postman_macos_bigsur_icon_189815.png"
+  },
+  {
+    "name": "Git VCS",
+    "icon": "/assets/images/skills/git-vcs.png",
+    "originalUrl": "https://img.icons8.com/color/48/000000/git.png"
+  },
+  {
+    "name": "GitHub",
+    "icon": "/assets/images/skills/github.png",
+    "originalUrl": "https://img.icons8.com/glyph-neue/48/ffffff/github.png"
+  },
+  {
+    "name": "Pytorch",
+    "icon": "/assets/images/skills/pytorch.png",
+    "originalUrl": "https://img.icons8.com/?size=100&id=jH4BpkMnRrU5&format=png&color=000000"
+  },
+  {
+    "name": "Tensorflow",
+    "icon": "/assets/images/skills/tensorflow.png",
+    "originalUrl": "https://img.icons8.com/?size=100&id=n3QRpDA7KZ7P&format=png&color=000000"
+  },
+  {
+    "name": "Keras",
+    "icon": "/assets/images/skills/keras.png",
+    "originalUrl": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRMm3a9krUhkFr9ok_Ios7qoh8Q7318Nrf6MA&s"
+  },
+  {
+    "name": "Scikit-learn",
+    "icon": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/05/Scikit_learn_logo_small.svg/1200px-Scikit_learn_logo_small.svg.png"
+  },
+  {
+    "name": "OpenCV",
+    "icon": "/assets/images/skills/opencv.png",
+    "originalUrl": "https://img.icons8.com/?size=100&id=apebs8fnmi4m&format=png&color=000000"
+  },
+  {
+    "name": "Pandas",
+    "icon": "/assets/images/skills/pandas.png",
+    "originalUrl": "https://img.icons8.com/?size=100&id=xSkewUSqtErH&format=png&color=000000"
+  },
+  {
+    "name": "Numpy",
+    "icon": "/assets/images/skills/numpy.png",
+    "originalUrl": "https://img.icons8.com/?size=100&id=aR9CXyMagKIS&format=png&color=000000"
+  },
+  {
+    "name": "Sympy",
+    "icon": "/assets/images/skills/sympy.png",
+    "originalUrl": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRtf21jrcCTqI-kjcj9dby41qdb7q7nHYpgRg&s"
+  },
+  {
+    "name": "Optuna",
+    "icon": "/assets/images/skills/optuna.png",
+    "originalUrl": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTDC8FJzjXfOevnZgr28qDlbMnuXEPvSsX8tw&s"
+  },
+  {
+    "name": "Hyper Opt",
+    "icon": "/assets/images/skills/hyper-opt.png",
+    "originalUrl": "https://miro.medium.com/max/166/1*ef6Le4SDD-aRNtVrjaYH9A.png"
+  }
+]
