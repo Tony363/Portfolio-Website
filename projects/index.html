@@ -4,11 +4,23 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- Performance optimizations -->
+    <link rel="preload" href="./style.css" as="style">
+    <link rel="dns-prefetch" href="//cdnjs.cloudflare.com">
+    <link rel="dns-prefetch" href="//img.icons8.com">
+    
     <link rel="stylesheet" href="./style.css">
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link id='favicon' rel="shortcut icon" href="/assets/images/favicon.png" type="image/x-png">
     <title>Projects | Portfolio Tony Siu</title>
+    
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="Explore Tony Siu's AI and Computer Vision projects including Google Pixel CV testing, HackHarvard voice coding, and edge sports analytics">
+    <meta name="keywords" content="Tony Siu, AI projects, Computer Vision, Google Pixel, HackHarvard, projects portfolio">
+    <meta name="author" content="Tony Siu">
+    <meta name="robots" content="index, follow">
 </head>
 <body>
 
@@ -25,7 +37,7 @@
             <li><a href="/#education">Education</a></li>
             <li><a class="active" href="/#work">Work</a></li>
             <!-- <li><a href="/#experience">Experience</a></li> -->
-             <li><a href="experience/index.html"><i class="fas fa-chevron-circle-right"></i> experience</a></li>
+             <li><a href="/experience/"><i class="fas fa-chevron-circle-right"></i> experience</a></li>
             <li><a href="/#contact">Contact</a></li>
             </ul>
         </nav>
@@ -66,7 +78,7 @@
   </div>
 
   <div class="backbtn">
-    <a href="/#work" class="btn">
+    <a href="/#work" class="btn" aria-label="Back to home page">
         <i class="fas fa-arrow-left"></i>
         <span>Back to Home</span>
   </a>
@@ -76,7 +88,7 @@
 <!-- work project section ends -->
 
 <!-- scroll top btn -->
-<a href="#work" class="fas fa-angle-up" id="scroll-top"></a>
+<a href="#work" class="fas fa-angle-up" id="scroll-top" aria-label="Scroll to top"></a>
 <!-- scroll back to top -->
 
 
@@ -95,6 +107,8 @@
 
 <!-- ==== ALL MAJOR JAVASCRIPT CDNS ENDS ==== -->
 
+<!-- Performance enhancements -->
+<script src="../performance-enhancements.js"></script>
 <script src="./script.js"></script>
 
 </body>

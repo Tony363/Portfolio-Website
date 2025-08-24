@@ -33,54 +33,116 @@ document.addEventListener('visibilitychange',
 // fetch projects start
 function getProjects() {
     return fetch("projects.json")
-        .then(response => response.json())
+        .then(response => {
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            return response.json();
+        })
         .then(data => {
             return data
+        })
+        .catch(error => {
+            console.error('Error loading projects:', error);
+            return [];
         });
 }
 
+// Utility function to escape HTML to prevent XSS
+function escapeHtml(text) {
+    if (!text) return '';
+    const map = {
+        '&': '&amp;',
+        '<': '&lt;',
+        '>': '&gt;',
+        '"': '&quot;',
+        "'": '&#039;'
+    };
+    return text.toString().replace(/[&<>"']/g, m => map[m]);
+}
 
 function showProjects(projects) {
     let projectsContainer = document.querySelector(".work .box-container");
-    let projectsHTML = "";
+    projectsContainer.innerHTML = ''; // Clear existing content
+    
     projects.forEach(project => {
-        projectsHTML += `
-        <div class="grid-item ${project.category}">
-        <div class="box tilt" style="width: 380px; margin: 1rem">
-      <img draggable="false" src="/assets/images/projects/${project.image}.png" alt="project" />
-      <div class="content">
-        <div class="tag">
-        <h3>${project.name}</h3>
-        </div>
-        <div class="desc">
-          <p>${project.desc}</p>
-          <div class="btns">
-            <a href="${project.links.view}" class="btn" target="_blank"><i class="fas fa-eye"></i> View</a>
-            <a href="${project.links.code}" class="btn" target="_blank">Code <i class="fas fa-code"></i></a>
-          </div>
-        </div>
-      </div>
-    </div>
-    </div>`
+        // Create elements using DOM methods for security
+        const gridItem = document.createElement('div');
+        gridItem.className = `grid-item ${escapeHtml(project.category || '')}`;
+        
+        const boxDiv = document.createElement('div');
+        boxDiv.className = 'box tilt';
+        boxDiv.style.width = '380px';
+        boxDiv.style.margin = '1rem';
+        
+        // Image
+        const img = document.createElement('img');
+        img.draggable = false;
+        img.src = `/assets/images/projects/${escapeHtml(project.image)}.png`;
+        img.alt = 'project';
+        img.onerror = function() { 
+            this.src = '/assets/images/default-project.png';
+            this.style.display = 'none'; 
+        };
+        
+        // Content container
+        const contentDiv = document.createElement('div');
+        contentDiv.className = 'content';
+        
+        // Tag section
+        const tagDiv = document.createElement('div');
+        tagDiv.className = 'tag';
+        const h3 = document.createElement('h3');
+        h3.textContent = project.name || '';
+        tagDiv.appendChild(h3);
+        
+        // Description section
+        const descDiv = document.createElement('div');
+        descDiv.className = 'desc';
+        const p = document.createElement('p');
+        p.textContent = project.desc || '';
+        
+        // Buttons section
+        const btnsDiv = document.createElement('div');
+        btnsDiv.className = 'btns';
+        
+        if (project.links && project.links.view) {
+            const viewLink = document.createElement('a');
+            viewLink.href = escapeHtml(project.links.view);
+            viewLink.className = 'btn';
+            viewLink.target = '_blank';
+            viewLink.rel = 'noopener noreferrer';
+            viewLink.innerHTML = '<i class="fas fa-eye"></i> View';
+            btnsDiv.appendChild(viewLink);
+        }
+        
+        if (project.links && project.links.code) {
+            const codeLink = document.createElement('a');
+            codeLink.href = escapeHtml(project.links.code);
+            codeLink.className = 'btn';
+            codeLink.target = '_blank';
+            codeLink.rel = 'noopener noreferrer';
+            codeLink.innerHTML = 'Code <i class="fas fa-code"></i>';
+            btnsDiv.appendChild(codeLink);
+        }
+        
+        // Assemble the structure
+        descDiv.appendChild(p);
+        descDiv.appendChild(btnsDiv);
+        contentDiv.appendChild(tagDiv);
+        contentDiv.appendChild(descDiv);
+        boxDiv.appendChild(img);
+        boxDiv.appendChild(contentDiv);
+        gridItem.appendChild(boxDiv);
+        projectsContainer.appendChild(gridItem);
     });
-    projectsContainer.innerHTML = projectsHTML;
 
-    // vanilla tilt.js
-    // VanillaTilt.init(document.querySelectorAll(".tilt"), {
-    //     max: 20,
-    // });
-    // // vanilla tilt.js  
-
-    // /* ===== SCROLL REVEAL ANIMATION ===== */
-    // const srtop = ScrollReveal({
-    //     origin: 'bottom',
-    //     distance: '80px',
-    //     duration: 1000,
-    //     reset: true
-    // });
-
-    // /* SCROLL PROJECTS */
-    // srtop.reveal('.work .box', { interval: 200 });
+    // Initialize VanillaTilt for dynamic projects
+    if (typeof VanillaTilt !== 'undefined') {
+        VanillaTilt.init(document.querySelectorAll(".tilt"), {
+            max: 15
+        });
+    }
 
     // isotope filter products
     var $grid = $('.box-container').isotope({
@@ -116,4 +178,3 @@ var Tawk_API = Tawk_API || {}, Tawk_LoadStart = new Date();
     s0.parentNode.insertBefore(s1, s0);
 })();
 // End of Tawk.to Live Chat
-

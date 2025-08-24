@@ -1,0 +1,872 @@
+/* Modern Portfolio Enhancements - Making it Impressive! */
+
+/* ============================================
+   1. MODERN COLOR SYSTEM & VARIABLES
+   ============================================ */
+:root {
+  /* Modern Color Palette */
+  --primary: #6366f1;      /* Modern Indigo */
+  --primary-dark: #4338ca;
+  --primary-light: #818cf8;
+  --accent: #f59e0b;       /* Vibrant Amber */
+  --accent-hover: #d97706;
+  --surface: #1e293b;      /* Sophisticated Dark */
+  --surface-light: #334155;
+  --background: #0f172a;   /* Deep Background */
+  --text-primary: #f1f5f9;
+  --text-secondary: #94a3b8;
+  --success: #10b981;
+  --gradient-start: #6366f1;
+  --gradient-end: #8b5cf6;
+  
+  /* Spacing System */
+  --space-xs: 0.5rem;
+  --space-sm: 1rem;
+  --space-md: 1.5rem;
+  --space-lg: 2rem;
+  --space-xl: 3rem;
+  --space-2xl: 4rem;
+  
+  /* Modern Typography Scale */
+  --font-hero: clamp(2.5rem, 8vw, 4.5rem);
+  --font-title: clamp(2rem, 6vw, 3.5rem);
+  --font-heading: clamp(1.5rem, 4vw, 2.5rem);
+  --font-subheading: clamp(1.2rem, 3vw, 1.8rem);
+  --font-body: 1.1rem;
+  
+  /* Animation Timing */
+  --transition-fast: 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-base: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-slow: 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* ============================================
+   2. ENHANCED HERO SECTION
+   ============================================ */
+.home {
+  background: linear-gradient(135deg, var(--background) 0%, var(--surface) 100%);
+  position: relative;
+  overflow: hidden;
+}
+
+.home::before {
+  content: '';
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: 
+    radial-gradient(circle at 20% 80%, var(--primary) 0%, transparent 50%),
+    radial-gradient(circle at 80% 20%, var(--accent) 0%, transparent 50%),
+    radial-gradient(circle at 40% 40%, var(--primary-light) 0%, transparent 50%);
+  opacity: 0.1;
+  animation: gradientShift 20s ease-in-out infinite;
+}
+
+@keyframes gradientShift {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  33% { transform: translate(-20px, -20px) scale(1.1); }
+  66% { transform: translate(20px, -10px) scale(0.9); }
+}
+
+/* Modern Hero Content */
+.home .content h2 {
+  font-size: var(--font-hero);
+  font-weight: 800;
+  line-height: 1.1;
+  background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: textGlow 3s ease-in-out infinite;
+}
+
+@keyframes textGlow {
+  0%, 100% { filter: brightness(1); }
+  50% { filter: brightness(1.2); }
+}
+
+/* Availability Badge */
+.home .content::before {
+  content: 'Available for opportunities';
+  position: absolute;
+  top: -2rem;
+  left: 0;
+  background: linear-gradient(135deg, var(--success) 0%, #059669 100%);
+  color: white;
+  padding: 0.5rem 1.5rem;
+  border-radius: 2rem;
+  font-size: 0.9rem;
+  font-weight: 600;
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.05); opacity: 0.9; }
+}
+
+/* Enhanced CTA Buttons */
+.home .btn {
+  background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+  color: white;
+  padding: 1rem 2.5rem;
+  border-radius: 2rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  transition: all var(--transition-base);
+  box-shadow: 0 10px 30px rgba(99, 102, 241, 0.3);
+  position: relative;
+  overflow: hidden;
+}
+
+.home .btn::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+  transition: left 0.5s;
+}
+
+.home .btn:hover::before {
+  left: 100%;
+}
+
+.home .btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 20px 40px rgba(99, 102, 241, 0.4);
+}
+
+/* ============================================
+   3. MODERN ABOUT SECTION
+   ============================================ */
+#about {
+  background: var(--background);
+  position: relative;
+}
+
+#about .row {
+  align-items: center;
+  gap: 3rem;
+}
+
+/* Profile Image Enhancement */
+#about .image {
+  position: relative;
+  border-radius: 2rem;
+  overflow: hidden;
+  box-shadow: 0 20px 60px rgba(99, 102, 241, 0.2);
+  transition: transform var(--transition-base);
+}
+
+#about .image::before {
+  content: '';
+  position: absolute;
+  inset: -2px;
+  background: linear-gradient(45deg, var(--primary), var(--accent));
+  border-radius: 2rem;
+  z-index: -1;
+  opacity: 0;
+  transition: opacity var(--transition-base);
+}
+
+#about .image:hover::before {
+  opacity: 1;
+}
+
+#about .image:hover {
+  transform: scale(1.05) rotate(2deg);
+}
+
+/* About Content Cards */
+.about-highlights {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1.5rem;
+  margin-top: 2rem;
+}
+
+.highlight-card {
+  background: var(--surface);
+  padding: 1.5rem;
+  border-radius: 1rem;
+  border: 1px solid var(--surface-light);
+  transition: all var(--transition-base);
+  position: relative;
+  overflow: hidden;
+}
+
+.highlight-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 3px;
+  background: linear-gradient(90deg, var(--primary), var(--accent));
+  transform: translateX(-100%);
+  transition: transform var(--transition-base);
+}
+
+.highlight-card:hover::before {
+  transform: translateX(0);
+}
+
+.highlight-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 30px rgba(99, 102, 241, 0.2);
+  border-color: var(--primary);
+}
+
+.highlight-card i {
+  font-size: 2rem;
+  color: var(--primary);
+  margin-bottom: 1rem;
+}
+
+.highlight-card h4 {
+  color: var(--text-primary);
+  font-size: 1.2rem;
+  margin-bottom: 0.5rem;
+}
+
+.highlight-card p {
+  color: var(--text-secondary);
+  font-size: 0.95rem;
+}
+
+/* ============================================
+   4. ENHANCED SKILLS SECTION
+   ============================================ */
+#skills {
+  background: linear-gradient(180deg, var(--background) 0%, var(--surface) 100%);
+}
+
+/* Skills Grid Enhancement */
+#skills .container .box-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: 1.5rem;
+  padding: 2rem 0;
+}
+
+#skills .box {
+  background: var(--surface);
+  border: 1px solid var(--surface-light);
+  border-radius: 1rem;
+  padding: 1.5rem;
+  text-align: center;
+  transition: all var(--transition-base);
+  position: relative;
+  overflow: hidden;
+}
+
+#skills .box::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 0;
+  background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+  opacity: 0.1;
+  transition: height var(--transition-base);
+}
+
+#skills .box:hover::after {
+  height: 100%;
+}
+
+#skills .box:hover {
+  transform: translateY(-10px) scale(1.05);
+  box-shadow: 0 20px 40px rgba(99, 102, 241, 0.3);
+  border-color: var(--primary);
+}
+
+#skills .box img {
+  filter: brightness(0.9);
+  transition: all var(--transition-base);
+}
+
+#skills .box:hover img {
+  filter: brightness(1.1);
+  transform: scale(1.1);
+}
+
+/* Skill Progress Bars */
+.skill-progress {
+  margin-top: 2rem;
+}
+
+.skill-item {
+  margin-bottom: 1.5rem;
+}
+
+.skill-header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 0.5rem;
+}
+
+.skill-name {
+  color: var(--text-primary);
+  font-weight: 600;
+}
+
+.skill-percentage {
+  color: var(--primary);
+  font-weight: 700;
+}
+
+.skill-bar {
+  height: 8px;
+  background: var(--surface-light);
+  border-radius: 1rem;
+  overflow: hidden;
+  position: relative;
+}
+
+.skill-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--primary), var(--accent));
+  border-radius: 1rem;
+  animation: fillBar 1.5s ease-out;
+  position: relative;
+}
+
+@keyframes fillBar {
+  from { width: 0; }
+}
+
+.skill-fill::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+  animation: shimmer 2s infinite;
+}
+
+@keyframes shimmer {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+}
+
+/* ============================================
+   5. MODERN PROJECT CARDS
+   ============================================ */
+#projects .box-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+}
+
+#projects .box {
+  background: var(--surface);
+  border-radius: 1.5rem;
+  overflow: hidden;
+  transition: all var(--transition-base);
+  position: relative;
+  border: 1px solid var(--surface-light);
+}
+
+#projects .box::before {
+  content: 'Featured';
+  position: absolute;
+  top: 1rem;
+  right: -2rem;
+  background: var(--accent);
+  color: white;
+  padding: 0.3rem 3rem;
+  transform: rotate(45deg);
+  font-size: 0.8rem;
+  font-weight: 600;
+  z-index: 1;
+  opacity: 0;
+  transition: opacity var(--transition-base);
+}
+
+#projects .box:nth-child(1)::before {
+  opacity: 1;
+}
+
+#projects .box .image {
+  height: 200px;
+  overflow: hidden;
+  position: relative;
+}
+
+#projects .box .image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform var(--transition-slow);
+}
+
+#projects .box:hover .image img {
+  transform: scale(1.1);
+}
+
+#projects .box .content {
+  padding: 1.5rem;
+}
+
+#projects .box .content h3 {
+  color: var(--text-primary);
+  font-size: 1.3rem;
+  margin-bottom: 0.5rem;
+  font-weight: 700;
+}
+
+#projects .box .content p {
+  color: var(--text-secondary);
+  line-height: 1.6;
+  margin-bottom: 1rem;
+}
+
+/* Tech Stack Badges */
+.tech-stack {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.tech-badge {
+  background: var(--surface-light);
+  color: var(--primary);
+  padding: 0.3rem 0.8rem;
+  border-radius: 1rem;
+  font-size: 0.85rem;
+  font-weight: 600;
+  border: 1px solid var(--primary);
+}
+
+/* Project Links */
+#projects .box .btns {
+  display: flex;
+  gap: 1rem;
+}
+
+#projects .box .btns a {
+  flex: 1;
+  text-align: center;
+  padding: 0.7rem;
+  background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+  color: white;
+  border-radius: 0.8rem;
+  font-weight: 600;
+  transition: all var(--transition-base);
+}
+
+#projects .box .btns a:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 20px rgba(99, 102, 241, 0.3);
+}
+
+/* ============================================
+   6. ENHANCED EXPERIENCE TIMELINE
+   ============================================ */
+#experience {
+  background: var(--background);
+}
+
+#experience .timeline {
+  position: relative;
+  padding: 2rem 0;
+}
+
+#experience .timeline::before {
+  content: '';
+  position: absolute;
+  left: 50%;
+  top: 0;
+  bottom: 0;
+  width: 3px;
+  background: linear-gradient(180deg, var(--primary) 0%, var(--accent) 100%);
+  transform: translateX(-50%);
+}
+
+#experience .container {
+  background: var(--surface);
+  border: 1px solid var(--surface-light);
+  border-radius: 1.5rem;
+  padding: 2rem;
+  margin-bottom: 2rem;
+  position: relative;
+  transition: all var(--transition-base);
+}
+
+#experience .container::before {
+  content: '';
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  background: var(--primary);
+  border: 3px solid var(--background);
+  border-radius: 50%;
+  top: 2rem;
+}
+
+#experience .container.left::before {
+  right: -10px;
+}
+
+#experience .container.right::before {
+  left: -10px;
+}
+
+#experience .container:hover {
+  transform: scale(1.02);
+  box-shadow: 0 20px 40px rgba(99, 102, 241, 0.2);
+  border-color: var(--primary);
+}
+
+/* Company Logo Enhancement */
+#experience .container .tag img {
+  width: 50px;
+  height: 50px;
+  object-fit: contain;
+  filter: brightness(0.9);
+  transition: all var(--transition-base);
+}
+
+#experience .container:hover .tag img {
+  filter: brightness(1.1);
+  transform: scale(1.1);
+}
+
+/* ============================================
+   7. MODERN CONTACT FORM
+   ============================================ */
+#contact {
+  background: linear-gradient(180deg, var(--surface) 0%, var(--background) 100%);
+}
+
+#contact .container form {
+  background: var(--surface);
+  border: 1px solid var(--surface-light);
+  border-radius: 1.5rem;
+  padding: 2rem;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+}
+
+#contact .form-control {
+  margin-bottom: 1.5rem;
+  position: relative;
+}
+
+#contact .form-control input,
+#contact .form-control textarea {
+  width: 100%;
+  padding: 1rem 1.5rem;
+  background: var(--background);
+  border: 2px solid var(--surface-light);
+  border-radius: 1rem;
+  color: var(--text-primary);
+  font-size: 1rem;
+  transition: all var(--transition-base);
+}
+
+#contact .form-control input:focus,
+#contact .form-control textarea:focus {
+  outline: none;
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+  background: var(--surface);
+}
+
+/* Floating Labels */
+#contact .form-control label {
+  position: absolute;
+  left: 1.5rem;
+  top: 1rem;
+  color: var(--text-secondary);
+  transition: all var(--transition-base);
+  pointer-events: none;
+}
+
+#contact .form-control input:focus + label,
+#contact .form-control input:not(:placeholder-shown) + label,
+#contact .form-control textarea:focus + label,
+#contact .form-control textarea:not(:placeholder-shown) + label {
+  top: -0.5rem;
+  left: 1rem;
+  font-size: 0.85rem;
+  background: var(--surface);
+  padding: 0 0.5rem;
+  color: var(--primary);
+}
+
+/* Submit Button */
+#contact .btn {
+  width: 100%;
+  padding: 1.2rem;
+  background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+  color: white;
+  border: none;
+  border-radius: 1rem;
+  font-size: 1.1rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  cursor: pointer;
+  transition: all var(--transition-base);
+  position: relative;
+  overflow: hidden;
+}
+
+#contact .btn::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  transition: width 0.6s, height 0.6s;
+}
+
+#contact .btn:hover::before {
+  width: 300px;
+  height: 300px;
+}
+
+#contact .btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 20px 40px rgba(99, 102, 241, 0.4);
+}
+
+/* ============================================
+   8. FLOATING ACTION BUTTONS
+   ============================================ */
+.floating-actions {
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  z-index: 1000;
+}
+
+.fab {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.3rem;
+  box-shadow: 0 10px 30px rgba(99, 102, 241, 0.3);
+  cursor: pointer;
+  transition: all var(--transition-base);
+  position: relative;
+  overflow: hidden;
+}
+
+.fab::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  transition: width 0.3s, height 0.3s;
+}
+
+.fab:hover::before {
+  width: 100px;
+  height: 100px;
+}
+
+.fab:hover {
+  transform: scale(1.1);
+  box-shadow: 0 15px 40px rgba(99, 102, 241, 0.4);
+}
+
+/* Dark Mode Toggle */
+.theme-toggle {
+  background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%);
+}
+
+/* ============================================
+   9. LOADING ANIMATIONS
+   ============================================ */
+.skeleton {
+  background: linear-gradient(90deg, var(--surface) 25%, var(--surface-light) 50%, var(--surface) 75%);
+  background-size: 200% 100%;
+  animation: loading 1.5s infinite;
+  border-radius: 0.5rem;
+}
+
+@keyframes loading {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+/* ============================================
+   10. RESPONSIVE ENHANCEMENTS
+   ============================================ */
+@media (max-width: 768px) {
+  :root {
+    --font-hero: 2.5rem;
+    --font-title: 2rem;
+    --font-heading: 1.5rem;
+  }
+  
+  #experience .timeline::before {
+    left: 2rem;
+  }
+  
+  #experience .container {
+    margin-left: 3rem;
+  }
+  
+  #experience .container::before {
+    left: -10px;
+  }
+  
+  .floating-actions {
+    bottom: 1rem;
+    right: 1rem;
+  }
+  
+  .fab {
+    width: 48px;
+    height: 48px;
+    font-size: 1.1rem;
+  }
+}
+
+/* ============================================
+   11. PERFORMANCE OPTIMIZATIONS
+   ============================================ */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* ============================================
+   12. PROFESSIONAL POLISH
+   ============================================ */
+
+/* Smooth Scroll */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Better Focus States */
+*:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 2px;
+}
+
+/* Selection Colors */
+::selection {
+  background: var(--primary);
+  color: white;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--surface);
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, var(--primary) 0%, var(--accent) 100%);
+  border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--primary-dark);
+}
+
+/* Glass Morphism Effect */
+.glass {
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Gradient Text */
+.gradient-text {
+  background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Modern Badge */
+.badge {
+  display: inline-block;
+  padding: 0.5rem 1rem;
+  background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+  color: white;
+  border-radius: 2rem;
+  font-size: 0.85rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+/* Impact Metrics Section */
+.impact-metrics {
+  padding: 3rem 0;
+  background: var(--surface);
+  margin: 2rem 0;
+  border-radius: 1.5rem;
+}
+
+.metrics-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 2rem;
+  text-align: center;
+}
+
+.metric {
+  padding: 1.5rem;
+}
+
+.metric-number {
+  font-size: 2.5rem;
+  font-weight: 800;
+  background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  display: block;
+  margin-bottom: 0.5rem;
+}
+
+.metric-label {
+  color: var(--text-primary);
+  font-weight: 600;
+  display: block;
+  margin-bottom: 0.3rem;
+}
+
+.metric small {
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+}

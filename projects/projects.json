@@ -1,6 +1,6 @@
 [
   {
-    "name": "Pixel Device CV Testing'",
+    "name": "Pixel Device CV Testing",
     "desc": "Google University Research program for CV quality detection and flicker detection",
     "image": "googlecv",
     "category": "cv",
