@@ -1,0 +1,40 @@
+# Robots.txt for Portfolio Website
+# https://tonysiu.com
+
+User-agent: *
+Allow: /
+Disallow: /assets/data/
+Disallow: /scripts/
+Disallow: *.json$
+
+# Sitemap location
+Sitemap: https://tonysiu.com/sitemap.xml
+
+# Crawl delay for respectful crawling
+Crawl-delay: 1
+
+# Popular search engine bots
+User-agent: Googlebot
+Allow: /
+Crawl-delay: 0
+
+User-agent: Bingbot
+Allow: /
+Crawl-delay: 0
+
+User-agent: Slurp
+Allow: /
+Crawl-delay: 1
+
+# Block bad bots
+User-agent: AhrefsBot
+Disallow: /
+
+User-agent: SemrushBot
+Disallow: /
+
+User-agent: DotBot
+Disallow: /
+
+User-agent: MJ12bot
+Disallow: /

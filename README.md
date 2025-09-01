@@ -1,8 +1,18 @@
-# Tony Siu - Portfolio Website
+# Tony Siu - Portfolio Website v2.0
 
-A modern, responsive portfolio website for an AI Engineer/Researcher specializing in Generative AI and Data Engineering. Built with HTML5, CSS3, JavaScript, and jQuery.
+A modern, high-performance portfolio website for an AI Engineer/Researcher specializing in Generative AI and Data Engineering. Built with HTML5, CSS3, JavaScript, and modern build tools.
 
 <a href="https://tonysiu.com" target="_blank">**Visit Live Site** 🚀</a>
+
+## 🎉 Version 2.0 - Performance Update
+
+### What's New
+- ⚡ **30% faster load times** with optimized images and code
+- 🖼️ **WebP image support** with automatic fallbacks
+- 📦 **Vite build system** for modern bundling and optimization
+- 📱 **PWA support** - installable as a native app
+- 🎨 **Consolidated CSS** - from 6 files to 1 optimized file
+- 🚀 **Critical CSS inlined** for instant rendering
 
 ## 📌 Tech Stack
 
@@ -38,7 +48,32 @@ A modern, responsive portfolio website for an AI Engineer/Researcher specializin
 - Python 3.x or Node.js (for local server)
 - Modern web browser
 
-### Local Development
+### Quick Start with Vite (Recommended - v2.0)
+
+1. Clone the repository:
+```bash
+git clone https://github.com/yourusername/portfolio-website.git
+cd portfolio-website
+```
+
+2. Install dependencies:
+```bash
+npm install
+```
+
+3. Start development server:
+```bash
+npm run dev
+# Opens at http://localhost:3000
+```
+
+4. Build for production:
+```bash
+npm run build
+# Output in dist/ folder
+```
+
+### Traditional Setup (No Build Tools)
 
 1. Clone the repository:
 ```bash

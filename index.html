@@ -27,24 +27,30 @@
     <meta name="robots" content="index, follow">
     <link rel="canonical" href="https://tonysiu.com/">
     
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="/manifest.json">
+    <meta name="theme-color" content="#6366f1">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="Tony Siu">
+    <link rel="apple-touch-icon" href="/assets/images/favicon.png">
+    
     <!-- Performance optimizations -->
-    <link rel="preload" href="./assets/css/style.css" as="style">
+    <link rel="preload" href="./assets/css/main.css" as="style">
     <link rel="preload" href="./assets/js/particles.min.js" as="script">
     <link rel="dns-prefetch" href="//cdnjs.cloudflare.com">
     <link rel="dns-prefetch" href="//img.icons8.com">
     <link rel="dns-prefetch" href="//fonts.googleapis.com">
     
-    <!-- Custom CSS -->
-    <link rel="stylesheet" href="./assets/css/style.css">
-    <link rel="stylesheet" href="./assets/css/responsive-improvements.css">
-    <!-- Modern Enhancements CSS -->
-    <link rel="stylesheet" href="./assets/css/modern-enhancements.css">
-    <!-- Color Improvements CSS - Better Contrast & Accessibility -->
-    <link rel="stylesheet" href="./assets/css/color-improvements.css">
-    <!-- Contrast Improvements CSS - Fix dark text on dark backgrounds -->
-    <link rel="stylesheet" href="./assets/css/contrast-improvements.css">
-    <!-- Skills Optimization CSS - Fix image flickering and loading issues -->
-    <link rel="stylesheet" href="./assets/css/skills-optimization.css">
+    <!-- Critical CSS (inline for performance) -->
+    <style>
+        /* Critical CSS - Inline for instant rendering */
+        :root{--primary:#6366f1;--primary-dark:#4338ca;--text-primary:#f1f5f9;--transition-fast:0.2s cubic-bezier(0.4,0,0.2,1);--shadow-md:0 4px 6px -1px rgb(0 0 0/0.1)}*{margin:0;padding:0;box-sizing:border-box}html{font-size:16px;overflow-x:hidden;scroll-behavior:smooth}body{background:#f7f7f7;font-family:Poppins,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;line-height:1.6;color:#0e2431}header{position:fixed;top:0;left:0;right:0;z-index:1000;display:flex;align-items:center;justify-content:space-between;padding:1rem 5%;height:4.5rem;background-color:#fff;box-shadow:var(--shadow-md)}header .logo{font-size:1.25rem;font-weight:800;color:#0e2431}header .navbar ul{list-style:none;display:flex;gap:2.5rem}header .navbar ul li a{font-size:1rem;color:#0e2431;font-weight:600;text-decoration:none;transition:var(--transition-fast)}#menu{display:none;font-size:1.75rem;cursor:pointer}.home{position:relative;display:flex;flex-wrap:wrap;gap:1.5rem;min-height:100vh;align-items:center;padding-top:4.5rem}.home .content{flex:1 1 40rem;padding-top:1rem;z-index:1}.home .image{flex:1 1 40rem;z-index:1}.home .content h2{font-size:clamp(2rem,6vw,3rem);font-weight:800;color:#002057}.home .content h2 span{color:#ff7b00}.home .content p{font-size:1.5rem;color:#000;font-weight:600;padding:1rem 0}.home .btn{display:inline-block;padding:1.2rem 2.5rem;border-radius:.5rem;background:#2506ad;color:#fff;font-weight:600;box-shadow:0 5px 18px rgba(48,68,247,.6);text-decoration:none;transition:var(--transition-fast)}@media (max-width:768px){#menu{display:block}header .navbar{position:fixed;top:4.5rem;right:-100%;width:75%;height:100vh;background:#0e0f31;transition:var(--transition-fast)}header .navbar.nav-toggle{right:0}header .navbar ul{flex-direction:column;padding:2rem}.home{flex-direction:column;text-align:center}}@media (max-width:450px){html{font-size:14px}section{padding:2rem 1rem}}
+    </style>
+    
+    <!-- Main CSS (loaded async for performance) -->
+    <link rel="stylesheet" href="./assets/css/main.css" media="print" onload="this.media='all'">
+    <noscript><link rel="stylesheet" href="./assets/css/main.css"></noscript>
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <!-- Favicon -->

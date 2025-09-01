@@ -1,0 +1,99 @@
+{
+  "name": "Tony Siu - AI Engineer & Researcher Portfolio",
+  "short_name": "Tony Siu",
+  "description": "Portfolio of Tony Siu - Multi Modal Generative AI Researcher specializing in Computer Vision, NLP, and Statistical Optimization",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0f172a",
+  "theme_color": "#6366f1",
+  "orientation": "portrait-primary",
+  "scope": "/",
+  "lang": "en-US",
+  "dir": "ltr",
+  "categories": ["portfolio", "business", "education"],
+  "icons": [
+    {
+      "src": "/assets/images/favicon.png",
+      "sizes": "152x152",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/assets/images/favicon.webp",
+      "sizes": "152x152",
+      "type": "image/webp",
+      "purpose": "any"
+    },
+    {
+      "src": "/assets/images/profile.png",
+      "sizes": "316x316",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/assets/images/profile.webp",
+      "sizes": "316x316",
+      "type": "image/webp",
+      "purpose": "any maskable"
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "/assets/images/screenshot-desktop.png",
+      "sizes": "1920x1080",
+      "type": "image/png",
+      "label": "Desktop view of portfolio"
+    },
+    {
+      "src": "/assets/images/screenshot-mobile.png",
+      "sizes": "390x844",
+      "type": "image/png",
+      "label": "Mobile view of portfolio"
+    }
+  ],
+  "related_applications": [],
+  "prefer_related_applications": false,
+  "shortcuts": [
+    {
+      "name": "Projects",
+      "short_name": "Projects",
+      "description": "View my project portfolio",
+      "url": "/projects/",
+      "icons": [
+        {
+          "src": "/assets/images/favicon.png",
+          "sizes": "96x96"
+        }
+      ]
+    },
+    {
+      "name": "Experience",
+      "short_name": "Experience",
+      "description": "View my work experience",
+      "url": "/experience/",
+      "icons": [
+        {
+          "src": "/assets/images/favicon.png",
+          "sizes": "96x96"
+        }
+      ]
+    },
+    {
+      "name": "Contact",
+      "short_name": "Contact",
+      "description": "Get in touch with me",
+      "url": "/#contact",
+      "icons": [
+        {
+          "src": "/assets/images/favicon.png",
+          "sizes": "96x96"
+        }
+      ]
+    }
+  ],
+  "features": [
+    "Cross Platform",
+    "Offline Capable",
+    "Progressive Web App"
+  ]
+}
