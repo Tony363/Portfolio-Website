@@ -1,33 +1,57 @@
-$(document).ready(function () {
+// Initialize navigation functionality
+function initializeNavigation() {
+    const menu = document.getElementById('menu');
+    const navbar = document.querySelector('.navbar');
+    const scrollTop = document.getElementById('scroll-top');
+    
+    // Menu toggle functionality
+    if (menu && navbar) {
+        menu.addEventListener('click', function() {
+            this.classList.toggle('fa-times');
+            navbar.classList.toggle('nav-toggle');
+        });
+    }
 
-    $('#menu').click(function () {
-        $(this).toggleClass('fa-times');
-        $('.navbar').toggleClass('nav-toggle');
-    });
+    // Scroll and load event handling
+    function handleScrollAndLoad() {
+        // Close mobile menu on scroll
+        if (menu) menu.classList.remove('fa-times');
+        if (navbar) navbar.classList.remove('nav-toggle');
 
-    $(window).on('scroll load', function () {
-        $('#menu').removeClass('fa-times');
-        $('.navbar').removeClass('nav-toggle');
-
-        if (window.scrollY > 60) {
-            document.querySelector('#scroll-top').classList.add('active');
-        } else {
-            document.querySelector('#scroll-top').classList.remove('active');
+        // Show/hide scroll-to-top button
+        if (scrollTop) {
+            if (window.pageYOffset > 60) {
+                scrollTop.classList.add('active');
+            } else {
+                scrollTop.classList.remove('active');
+            }
         }
-    });
+    }
+
+    // Add scroll and load event listeners
+    window.addEventListener('scroll', handleScrollAndLoad, { passive: true });
+    window.addEventListener('load', handleScrollAndLoad);
+}
+
+// Initialize when DOM is loaded
+document.addEventListener('DOMContentLoaded', initializeNavigation);
+
+// Page visibility change handler
+document.addEventListener('visibilitychange', function() {
+    const favicon = document.getElementById('favicon');
+    
+    if (document.visibilityState === "visible") {
+        document.title = "Projects | Portfolio Tony Siu";
+        if (favicon) {
+            favicon.setAttribute('href', '/assets/images/favicon.png');
+        }
+    } else {
+        document.title = "Come Back To Portfolio";
+        if (favicon) {
+            favicon.setAttribute('href', '/assets/images/favhand.png');
+        }
+    }
 });
-
-document.addEventListener('visibilitychange',
-    function () {
-        if (document.visibilityState === "visible") {
-            document.title = "Projects | Portfolio Tony Siu";
-            $("#favicon").attr("href", "/assets/images/favicon.png");
-        }
-        else {
-            document.title = "Come Back To Portfolio";
-            $("#favicon").attr("href", "/assets/images/favhand.png");
-        }
-    });
 
 
 // fetch projects start
@@ -75,15 +99,30 @@ function showProjects(projects) {
         boxDiv.style.width = '380px';
         boxDiv.style.margin = '1rem';
         
-        // Image
+        // Image with WebP support
+        const picture = document.createElement('picture');
+        
+        // WebP source
+        const sourceWebP = document.createElement('source');
+        sourceWebP.type = 'image/webp';
+        sourceWebP.srcset = `/assets/images/projects/${escapeHtml(project.image)}.webp`;
+        
+        // PNG fallback
         const img = document.createElement('img');
         img.draggable = false;
         img.src = `/assets/images/projects/${escapeHtml(project.image)}.png`;
         img.alt = 'project';
+        img.loading = 'lazy';
         img.onerror = function() { 
-            this.src = '/assets/images/default-project.png';
+            this.src = '/assets/images/default-project.webp';
+            if (this.src.includes('default-project.webp')) {
+                this.src = '/assets/images/default-project.png';
+            }
             this.style.display = 'none'; 
         };
+        
+        picture.appendChild(sourceWebP);
+        picture.appendChild(img);
         
         // Content container
         const contentDiv = document.createElement('div');
@@ -131,7 +170,7 @@ function showProjects(projects) {
         descDiv.appendChild(btnsDiv);
         contentDiv.appendChild(tagDiv);
         contentDiv.appendChild(descDiv);
-        boxDiv.appendChild(img);
+        boxDiv.appendChild(picture);
         boxDiv.appendChild(contentDiv);
         gridItem.appendChild(boxDiv);
         projectsContainer.appendChild(gridItem);
@@ -144,22 +183,40 @@ function showProjects(projects) {
         });
     }
 
-    // isotope filter products
-    var $grid = $('.box-container').isotope({
-        itemSelector: '.grid-item',
-        layoutMode: 'fitRows',
-        masonry: {
-            columnWidth: 200
-        }
-    });
+    // Initialize Isotope filter functionality
+    const boxContainer = document.querySelector('.box-container');
+    const buttonGroup = document.querySelector('.button-group');
+    
+    if (boxContainer && typeof Isotope !== 'undefined') {
+        // Initialize Isotope
+        const grid = new Isotope(boxContainer, {
+            itemSelector: '.grid-item',
+            layoutMode: 'fitRows',
+            masonry: {
+                columnWidth: 200
+            }
+        });
 
-    // filter items on button click
-    $('.button-group').on('click', 'button', function () {
-        $('.button-group').find('.is-checked').removeClass('is-checked');
-        $(this).addClass('is-checked');
-        var filterValue = $(this).attr('data-filter');
-        $grid.isotope({ filter: filterValue });
-    });
+        // Filter items on button click
+        if (buttonGroup) {
+            buttonGroup.addEventListener('click', function(e) {
+                if (e.target.tagName === 'BUTTON') {
+                    // Remove active class from all buttons
+                    const buttons = buttonGroup.querySelectorAll('button');
+                    buttons.forEach(btn => btn.classList.remove('is-checked'));
+                    
+                    // Add active class to clicked button
+                    e.target.classList.add('is-checked');
+                    
+                    // Get filter value and apply filter
+                    const filterValue = e.target.getAttribute('data-filter');
+                    grid.arrange({ filter: filterValue });
+                }
+            });
+        }
+    } else {
+        console.warn('Isotope library not loaded or box-container not found');
+    }
 }
 
 getProjects().then(data => {

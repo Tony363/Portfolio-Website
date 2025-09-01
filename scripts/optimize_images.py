@@ -93,11 +93,11 @@ def optimize_image(file_path, dry_run=False):
             elif file_path.suffix.lower() == '.png':
                 img.save(file_path, 'PNG', optimize=True)
             
-            # Create WebP version for larger images
-            if original_size > 100 * 1024:  # > 100KB
-                img.save(webp_path, 'WebP', quality=quality, method=6)
-                webp_size = webp_path.stat().st_size
-                print(f"  🎨 Created WebP: {webp_path.name} ({webp_size // 1024}KB)")
+            # Create WebP version for ALL images (removed size restriction)
+            # This provides maximum compression and performance benefits
+            img.save(webp_path, 'WebP', quality=quality, method=6)
+            webp_size = webp_path.stat().st_size
+            print(f"  🎨 Created WebP: {webp_path.name} ({webp_size // 1024}KB)")
         
         # Get new size
         new_size = file_path.stat().st_size if not dry_run else original_size

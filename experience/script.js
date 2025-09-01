@@ -1,21 +1,40 @@
-$(document).ready(function(){
+// Initialize navigation functionality
+function initializeNavigation() {
+    const menu = document.getElementById('menu');
+    const navbar = document.querySelector('.navbar');
+    const scrollTop = document.getElementById('scroll-top');
+    
+    // Menu toggle functionality
+    if (menu && navbar) {
+        menu.addEventListener('click', function() {
+            this.classList.toggle('fa-times');
+            navbar.classList.toggle('nav-toggle');
+        });
+    }
 
-    $('#menu').click(function(){
-        $(this).toggleClass('fa-times');
-        $('.navbar').toggleClass('nav-toggle');
-    });
+    // Scroll and load event handling
+    function handleScrollAndLoad() {
+        // Close mobile menu on scroll
+        if (menu) menu.classList.remove('fa-times');
+        if (navbar) navbar.classList.remove('nav-toggle');
 
-    $(window).on('scroll load',function(){
-        $('#menu').removeClass('fa-times');
-        $('.navbar').removeClass('nav-toggle');
-
-        if(window.scrollY>60){
-            document.querySelector('#scroll-top').classList.add('active');
-        }else{
-            document.querySelector('#scroll-top').classList.remove('active');
+        // Show/hide scroll-to-top button
+        if (scrollTop) {
+            if (window.pageYOffset > 60) {
+                scrollTop.classList.add('active');
+            } else {
+                scrollTop.classList.remove('active');
+            }
         }
-    });
-});
+    }
+
+    // Add scroll and load event listeners
+    window.addEventListener('scroll', handleScrollAndLoad, { passive: true });
+    window.addEventListener('load', handleScrollAndLoad);
+}
+
+// Initialize when DOM is loaded
+document.addEventListener('DOMContentLoaded', initializeNavigation);
 
 /* ===== SCROLL REVEAL ANIMATION ===== */
 const srtop = ScrollReveal({
@@ -44,14 +63,19 @@ s0.parentNode.insertBefore(s1,s0);
 
 
 
-document.addEventListener('visibilitychange',
-function(){
-    if(document.visibilityState === "visible"){
+// Page visibility change handler
+document.addEventListener('visibilitychange', function() {
+    const favicon = document.getElementById('favicon');
+    
+    if (document.visibilityState === "visible") {
         document.title = "Experience | Portfolio Tony Siu";
-        $("#favicon").attr("href","/assets/images/favicon.png");
-    }
-    else {
+        if (favicon) {
+            favicon.setAttribute('href', '/assets/images/favicon.png');
+        }
+    } else {
         document.title = "Come Back To Portfolio";
-        $("#favicon").attr("href","/assets/images/favhand.png");
+        if (favicon) {
+            favicon.setAttribute('href', '/assets/images/favhand.png');
+        }
     }
 });

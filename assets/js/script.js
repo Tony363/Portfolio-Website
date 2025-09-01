@@ -89,44 +89,85 @@ document.addEventListener('DOMContentLoaded', function() {
     VanillaTilt.init(document.querySelectorAll(".tilt"), { max: 15 });
 });
 
-$(document).ready(function () {
+// Vanilla JavaScript implementation of jQuery functionality
+function initializeNavigation() {
+    const menu = document.getElementById('menu');
+    const navbar = document.querySelector('.navbar');
+    const scrollTop = document.getElementById('scroll-top');
+    
+    // Menu toggle functionality
+    if (menu && navbar) {
+        menu.addEventListener('click', function() {
+            this.classList.toggle('fa-times');
+            navbar.classList.toggle('nav-toggle');
+        });
+    }
 
-    $('#menu').click(function () {
-        $(this).toggleClass('fa-times');
-        $('.navbar').toggleClass('nav-toggle');
-    });
+    // Scroll and load event handling
+    function handleScrollAndLoad() {
+        // Close mobile menu on scroll
+        if (menu) menu.classList.remove('fa-times');
+        if (navbar) navbar.classList.remove('nav-toggle');
 
-    $(window).on('scroll load', function () {
-        $('#menu').removeClass('fa-times');
-        $('.navbar').removeClass('nav-toggle');
-
-        if (window.scrollY > 60) {
-            document.querySelector('#scroll-top').classList.add('active');
-        } else {
-            document.querySelector('#scroll-top').classList.remove('active');
+        // Show/hide scroll-to-top button
+        if (scrollTop) {
+            if (window.pageYOffset > 60) {
+                scrollTop.classList.add('active');
+            } else {
+                scrollTop.classList.remove('active');
+            }
         }
 
-        // scroll spy
-        $('section').each(function () {
-            let height = $(this).height();
-            let offset = $(this).offset().top - 200;
-            let top = $(window).scrollTop();
-            let id = $(this).attr('id');
+        // Scroll spy functionality
+        const sections = document.querySelectorAll('section');
+        const navLinks = document.querySelectorAll('.navbar ul li a');
+        
+        sections.forEach(section => {
+            if (!section.id) return;
+            
+            const rect = section.getBoundingClientRect();
+            const height = rect.height;
+            const offset = rect.top + window.pageYOffset - 200;
+            const top = window.pageYOffset;
+            const id = section.id;
 
             if (top > offset && top < offset + height) {
-                $('.navbar ul li a').removeClass('active');
-                $('.navbar').find(`[href="#${id}"]`).addClass('active');
+                // Remove active class from all nav links
+                navLinks.forEach(link => link.classList.remove('active'));
+                
+                // Add active class to current section link
+                const activeLink = document.querySelector(`.navbar [href="#${id}"]`);
+                if (activeLink) {
+                    activeLink.classList.add('active');
+                }
+            }
+        });
+    }
+
+    // Add scroll and load event listeners
+    window.addEventListener('scroll', handleScrollAndLoad, { passive: true });
+    window.addEventListener('load', handleScrollAndLoad);
+
+    // Smooth scrolling for anchor links
+    const anchorLinks = document.querySelectorAll('a[href*="#"]');
+    anchorLinks.forEach(link => {
+        link.addEventListener('click', function(e) {
+            const href = this.getAttribute('href');
+            if (!href || href === '#') return;
+            
+            const targetElement = document.querySelector(href);
+            if (targetElement) {
+                e.preventDefault();
+                
+                // Smooth scroll to target
+                window.scrollTo({
+                    top: targetElement.offsetTop,
+                    behavior: 'smooth'
+                });
             }
         });
     });
-
-    // smooth scrolling
-    $('a[href*="#"]').on('click', function (e) {
-        e.preventDefault();
-        $('html, body').animate({
-            scrollTop: $($(this).attr('href')).offset().top,
-        }, 500, 'linear')
-    });
+}
 
     // EmailJS configuration - More secure approach
     // Note: For production, use environment variables or server-side processing
@@ -142,7 +183,9 @@ $(document).ready(function () {
     }
     
     // Contact form submission with improved security and UX
-    $("#contact-form").submit(function (event) {
+    const contactForm = document.getElementById('contact-form');
+    if (contactForm) {
+        contactForm.addEventListener('submit', function(event) {
         event.preventDefault();
         
         // Basic client-side validation
@@ -201,20 +244,29 @@ $(document).ready(function () {
         }
     });
     // <!-- emailjs to mail contact form data -->
+        });
+    }
+}
 
+// Initialize navigation when DOM is loaded
+document.addEventListener('DOMContentLoaded', initializeNavigation);
+
+// Page visibility change handler
+document.addEventListener('visibilitychange', function() {
+    const favicon = document.getElementById('favicon');
+    
+    if (document.visibilityState === "visible") {
+        document.title = "Portfolio | Tony Siu";
+        if (favicon) {
+            favicon.setAttribute('href', 'assets/images/favicon.png');
+        }
+    } else {
+        document.title = "Come Back To Portfolio";
+        if (favicon) {
+            favicon.setAttribute('href', 'assets/images/favhand.png');
+        }
+    }
 });
-
-document.addEventListener('visibilitychange',
-    function () {
-        if (document.visibilityState === "visible") {
-            document.title = "Portfolio | Tony Siu";
-            $("#favicon").attr("href", "assets/images/favicon.png");
-        }
-        else {
-            document.title = "Come Back To Portfolio";
-            $("#favicon").attr("href", "assets/images/favhand.png");
-        }
-    });
 
 
 // <!-- typed js effect starts -->
@@ -353,11 +405,29 @@ function showProjects(projects) {
         const boxDiv = document.createElement('div');
         boxDiv.className = 'box tilt';
         
+        // Create picture element for WebP support
+        const picture = document.createElement('picture');
+        
+        // WebP source
+        const sourceWebP = document.createElement('source');
+        sourceWebP.type = 'image/webp';
+        sourceWebP.srcset = `/assets/images/projects/${escapeHtml(project.image)}.webp`;
+        
+        // PNG fallback
         const img = document.createElement('img');
         img.draggable = false;
         img.src = `/assets/images/projects/${escapeHtml(project.image)}.png`;
         img.alt = 'project';
-        img.onerror = function() { this.src = '/assets/images/default-project.png'; };
+        img.loading = 'lazy';
+        img.onerror = function() { 
+            this.src = '/assets/images/default-project.webp';
+            if (this.src.includes('default-project.webp')) {
+                this.src = '/assets/images/default-project.png';
+            }
+        };
+        
+        picture.appendChild(sourceWebP);
+        picture.appendChild(img);
         
         const contentDiv = document.createElement('div');
         contentDiv.className = 'content';
@@ -400,7 +470,7 @@ function showProjects(projects) {
         descDiv.appendChild(btnsDiv);
         contentDiv.appendChild(tagDiv);
         contentDiv.appendChild(descDiv);
-        boxDiv.appendChild(img);
+        boxDiv.appendChild(picture);
         boxDiv.appendChild(contentDiv);
         projectsContainer.appendChild(boxDiv);
     });
