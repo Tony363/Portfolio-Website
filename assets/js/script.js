@@ -244,9 +244,7 @@ function initializeNavigation() {
         }
     });
     // <!-- emailjs to mail contact form data -->
-        });
     }
-}
 
 // Initialize navigation when DOM is loaded
 document.addEventListener('DOMContentLoaded', initializeNavigation);
@@ -270,12 +268,16 @@ document.addEventListener('visibilitychange', function() {
 
 
 // <!-- typed js effect starts -->
-var typed = new Typed(".typing-text", {
-    strings: ["Multi-Modal Generative AI", "Computer Vision", "Natural Language Processing", "Data Engineering", "Statistical Optimization"],
-    loop: true,
-    typeSpeed: 50,
-    backSpeed: 25,
-    backDelay: 500,
+document.addEventListener('DOMContentLoaded', function() {
+    if (document.querySelector(".typing-text")) {
+        var typed = new Typed(".typing-text", {
+            strings: ["Multi-Modal Generative AI", "Computer Vision", "Natural Language Processing", "Data Engineering", "Statistical Optimization"],
+            loop: true,
+            typeSpeed: 50,
+            backSpeed: 25,
+            backDelay: 500,
+        });
+    }
 });
 // <!-- typed js effect ends -->
 
@@ -488,12 +490,21 @@ function showProjects(projects) {
     srtop.reveal('.work .box', { interval: 200 });
 }
 
-fetchData().then(data => {
-    showSkills(data);
-});
+// Load skills and projects when DOM is ready
+document.addEventListener('DOMContentLoaded', function() {
+    fetchData().then(data => {
+        console.log('Skills data loaded:', data);
+        showSkills(data);
+    }).catch(err => {
+        console.error('Error loading skills:', err);
+    });
 
-fetchData("projects").then(data => {
-    showProjects(data);
+    fetchData("projects").then(data => {
+        console.log('Projects data loaded:', data);
+        showProjects(data);
+    }).catch(err => {
+        console.error('Error loading projects:', err);
+    });
 });
 
 // Start of Tawk.to Live Chat
